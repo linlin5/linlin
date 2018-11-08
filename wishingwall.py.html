@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>wishingwall.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #808080; font-style: italic;}
+.s1 { color: #000000;}
+.s2 { color: #000080; font-weight: bold;}
+.s3 { color: #008080; font-weight: bold;}
+.s4 { color: #0000ff;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+wishingwall.py</font>
+</center></td></tr></table>
+<pre><span class="s0">#!/usr/bin/env python </span>
+# -*- coding:utf-8 -*-
+<span class="s2">from </span>tornado <span class="s2">import </span>web, ioloop, httpserver
+<span class="s2">import </span>time
+<span class="s2">import </span>json
+
+<span class="s0"># 留言存在全局变量中</span>
+MESSAGES = [
+    {<span class="s3">'id'</span>: <span class="s4">1</span>,<span class="s3">'name'</span>:<span class="s3">'零零'</span>, <span class="s3">'time'</span>:<span class="s3">'2018-11-07'</span>, <span class="s3">'content'</span>:<span class="s3">'来来来，一起许下愿望吧~'</span>, <span class="s3">'num'</span>: <span class="s4">1</span>}
+]
+
+<span class="s0">#首页模块</span>
+<span class="s2">class </span>MainPageHandler(web.RequestHandler):
+    <span class="s2">def </span>get(self, *args, **kwargs):
+        <span class="s0">#self.write(&quot;HELLO&quot;)</span>
+        self.render(<span class="s3">'index.html'</span>, messages=MESSAGES)
+        <span class="s0">#渲染前端页面的函数</span>
+
+#许愿
+<span class="s2">class </span>WishHandler(web.RequestHandler):
+    <span class="s0"># 返回许愿界面</span>
+    <span class="s2">def </span>get(self, *args, **kwargs): <span class="s0"># 对应http get 请求</span>
+        #第一次访问许愿页面
+        self.render(<span class="s3">'wish.html'</span>)
+
+    <span class="s0"># 接收前端传递的数据，post 请求</span>
+    <span class="s2">def </span>post(self, *args, **kwargs): <span class="s0"># 对应http post 请求</span>
+        #获取前端传递的数据
+        content = self.get_argument(<span class="s3">'content'</span>,default=<span class="s2">None</span>)
+        <span class="s0">#print(context)</span>
+        name = self.get_argument(<span class="s3">'name'</span>, default=<span class="s2">None</span>)
+        <span class="s0">#print(name)</span>
+        <span class="s2">if not </span>name:
+            name = <span class="s3">'匿名'</span>
+        <span class="s2">if </span>content: <span class="s0"># 敏感词汇 过滤</span>
+            # 添加 每个人的愿望
+            MESSAGES.append({
+                <span class="s3">'name'</span>: name,
+                <span class="s3">'content'</span>: content,
+                <span class="s3">'id'</span>: len(MESSAGES) + <span class="s4">1</span>,
+                <span class="s3">'num'</span>: len(MESSAGES) + <span class="s4">1</span>,
+                <span class="s3">'time'</span>: time.strftime(<span class="s3">'%Y-%m-%d'</span>)
+            })
+            <span class="s0"># 跳转</span>
+            self.redirect(<span class="s3">'/'</span>) <span class="s0">#跳转到首页面</span>
+        <span class="s2">else</span>:
+            self.write(<span class="s3">'内容不能为空'</span>)
+
+
+<span class="s0">#设置</span>
+settings = {
+    <span class="s3">'template_path'</span>:<span class="s3">'templates'</span>, <span class="s0"># 设置模板文件的路径</span>
+    <span class="s3">'static_path'</span>:<span class="s3">'statics'</span><span class="s0">#设置静态文件路径</span>
+}
+
+<span class="s0">#路由分配</span>
+application = web.Application([
+    (<span class="s3">r&quot;/&quot;</span>, MainPageHandler),
+    (<span class="s3">r&quot;/wish&quot;</span>, WishHandler),
+    ], **settings)
+
+
+<span class="s2">if </span>__name__ ==<span class="s3">'__main__'</span>:
+    http_server = httpserver.HTTPServer(application)
+    http_server.listen(<span class="s4">1001</span>)
+    ioloop.IOLoop.current().start()
+
+<span class="s0">####打开网页：http://127.0.0.1:8080/</span>
+
+
+
+
+
+</pre>
+</body>
+</html>

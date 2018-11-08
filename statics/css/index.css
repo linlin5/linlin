@@ -1,0 +1,151 @@
+body{
+	overflow:hidden;
+}
+img.background{
+	position:absolute;
+	width:100%;
+	height:100%;
+	display:block;
+}
+
+a.btn1{
+	display:block;
+	position: absolute;/*显示*/
+	top: 100%;
+	right: 25%;
+}
+.btn2{
+	display:block;
+	position: absolute;/*显示*/
+	width: 200px;
+	height: 50px;
+	text-align: center;
+	font-size:25px;
+	font-weight: bolder;
+	background: honeydew;
+	color: blue;
+}
+.item
+{
+	position: absolute;/*显示*/
+	top: 70%;
+	right: 73%;
+	text-align: center;
+	font-size:50px;
+	font-weight: bolder;
+	color: black;
+}
+.wishes
+{
+	position: absolute;/*显示*/
+	top: 73%;
+	right: 10%;
+	background: aliceblue;
+	resize: none;
+	font-size:20px;
+}
+
+.user
+{
+	position: absolute;/*显示*/
+	top: 95%;
+	right: 10%;
+	background: aliceblue;
+	resize: none;
+	font-size:20px;
+
+}
+
+.btn3{
+	display:block;
+	position: absolute;/*显示*/
+	top: 103%;
+	right: 10%;
+	width: 100px;
+	height: 30px;
+}
+#content {
+	margin: 0 auto;
+	width: 100%; /*background: url(background.jpg) no-repeat left top;*/
+	height: 627px;
+	position: absolute;
+	font-weight: bolder;
+	color: crimson;
+}
+ #content .tip1, #content .tip2, #content .tip3, #content .tip4, #content .tip5, #content .tip6, #content .tip7, #content .tip8 {
+	position: absolute;
+    width: 227px;
+	left: 200px;
+    top: 100px;
+}
+
+#content .tip1 .tip_h {
+	background: url(tip1_h.gif) no-repeat left top;
+}
+
+#content .tip1 .tip_h, #content .tip2 .tip_h, #content .tip3 .tip_h, #content .tip4 .tip_h, #content .tip5 .tip_h, #content .tip6 .tip_h, #content .tip7 .tip_h, #content .tip8 .tip_h {
+	width: 227px;
+	padding-top: 45px;
+	height: 23px;
+	text-align: left;
+	cursor: move;
+}
+#content .tip1 .tip_c {
+	background: url(tip1_c.gif) repeat-y;
+}
+
+#content .tip1 .tip_c, #content .tip2 .tip_c, #content .tip3 .tip_c, #content .tip4 .tip_c, #content .tip5 .tip_c, #content .tip6 .tip_c, #content .tip7 .tip_c, #content .tip8 .tip_c {
+	width: 200px;
+	padding-left: 12px;
+	padding-right: 15px;
+	min-height: 40px;
+	text-align: left;
+	line-height: 20px;
+	max-height: 160px;
+	word-wrap: break-word;
+	word-break: break-all;
+	overflow: hidden;
+}
+
+#content .tip1 .tip_f {
+	background: url(tip1_f.gif) no-repeat left top;
+}
+
+#content .tip1 .tip_f, #content .tip2 .tip_f, #content .tip3 .tip_f, #content .tip4 .tip_f, #content .tip5 .tip_f, #content .tip6 .tip_f, #content .tip7 .tip_f, #content .tip8 .tip_f {
+	width: 227px;
+	height: 53px;
+	padding-top: 20px;
+}
+#content .close, #content .close2 {
+	float: left;
+	font-size: 12px;
+	cursor: pointer;
+	color: #000000;
+}
+.clr {
+	clear: both;
+	overflow: auto;
+	display: block;
+	height: 0px;
+}
+#content .icon {
+	float: left;
+	width: 35px;
+	padding-left: 15px;
+	height: 35px;
+	text-align: center;
+}
+#content .name {
+	float: right;
+	padding-right: 15px;
+	text-align: right;
+	font-size: 14px;
+	line-height: 35px;
+	color: #C0F;
+        }
+#content .num {
+	float: left;
+	padding-left: 7px;
+	width: 195px;
+}
+

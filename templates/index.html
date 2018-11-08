@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet"  href="{{ static_url('css/index.css') }}">
+</head>
+<body>
+    <img class="background" src="{{ static_url('images/background.jpg') }}" />
+    <div id="content"  >
+        <a href="/wish" style="..." class="btn1">
+            <button class="btn2">许个愿望吧
+            </button>
+        </a>
+    </div>
+    <!--<h1 style="color: red">Hello Everybody</h1>
+    <img src="{{ static_url('images/background.jpg') }}" alt="">-->
+
+   <script>
+
+        //模拟数据库，获取信息
+       // var messages = [
+         //   {"id":1,"name":"mahu","content":"今天你拿苹果支付了么","time":"2016-02-17 00:00:00"},
+         //   {"id":2,"name":"haha","content":"今天天气不错，风和日丽的","time":"2016-02-18 12:40:00"},
+        //    {"id":3,"name":"jjjj","content":"常要说的事儿是乐生于苦","time":"2016-03-18 12:40:00"},
+         //   {"id":4,"name":"9.8的妹纸","content":"把朋友家厕所拉堵了 不敢出去 掏了半小时了都","time":"2016-03-18 12:40:00"},
+         //   {"id":5,"name":"雷锋ii.","content":"元宵节快乐","time":"2016-02-22 12:40:00"},
+         //   {"id":6,"name":"哎呦哥哥.","content":"据说今晚央视的元宵晚会导演和春晚导演是同一个人，真是躲得过初一，躲不过十五。","time":"2016-02-22 01:30:00"},
+         //   {"id":7,"name":"没猴哥，不春晚","content":"班主任:“小明，你都十二岁了，还是三年级，不觉得羞愧吗”？。小明:“一点也不觉得，老师你都四十多岁了，不也是年年在三年级混日子吗？羞愧的应该是你”。老师:……","time":"2016-02-22 01:30:00"},
+        //    {"id":8,"name":"哎呦杰杰.","content":"真搞不懂你们地球人，月亮有什么好看的，全是坑，还是对面那哥们好看，","time":"2016-02-22 01:30:00"},
+         //   {"id":9,"name":"哎呦哎呦","content":"今天哪里的烟花最好看！！？答：朋友圈。。。","time":"2016-02-22 02:30:00"}
+      //  ];
+
+        var messages = [
+            {% for item in messages %}
+               {'name':'{{ item['name'] }}',
+                'id':{{ item['id'] }},
+                'content':'{{ item['content'] }}',
+                'num':{{ item['num'] }},
+                'time':'{{ item['time'] }}',
+               },
+            {% end %}
+        ]
+    //需求1：模拟数据库获取信息，然后在页面上生成数组的长度个tip,然后分别问起内容进行修改。
+    //需求2：点击内容，提高层级；点击关闭按钮，删除tip标签；双击顶部，删除标签.....
+
+    //需求1：模拟数据库获取信息，然后在页面上生成数组的长度个tip,然后分别问起内容进行修改。
+    //步骤：
+        //获取相关元素
+        var content = document.getElementById("content");
+        //循环生成div标签，然后为innerHTML属性添加内容
+        for(var i=0;i<messages.length;i++){
+            //生成新标签
+            var newDiv = document.createElement("div");
+            //绑定类名和ID
+            newDiv.className = "tip1";
+            newDiv.id = "tip"+messages[i].id;
+            //改变位置
+            var topValue = parseInt(Math.random()*500);
+            var leftValue = parseInt(Math.random()*1200);
+            newDiv.style.top = topValue+"px";
+            newDiv.style.left = leftValue+"px";
+            //赋值内容
+            newDiv.innerHTML = '<div class="tip_h" title="双击关闭纸条">'+
+                                        '<div class="num">第['+messages[i].num+']条'+messages[i].time+'</div>'+
+                                        '<div class="close" title="关闭纸条" >×</div>'+
+                                        '<div class="clr"></div>'+
+                                '</div>'+
+                                '<div class="tip_c">'+
+                                    messages[i].content+
+                                 '</div>'+
+                                '<div class="tip_f">'+
+                                    '<div class="icon">'+
+                                    '<img src="{{ static_url('images/bpic_1.gif') }}" alt="" title="">'+
+                                '</div>'+
+                                '<div class="name">'+messages[i].name+'</div>'+
+                                    '<div class="clr"></div>'+
+                                '</div>';
+            //把新创建的元素放入content里面
+            content.appendChild(newDiv);
+
+
+            //绑定事件，提高层级
+            newDiv.onclick = fn;
+
+            //点击关闭按钮的时候关闭父盒子。
+            var closeDiv = newDiv.getElementsByClassName("close")[0];
+            closeDiv.onclick = function () {
+                //不能用newDiv，因为在页面加载的时候newDiv，已经变成最后一个了，当你点击的时候，用远关闭的是最后的那个div。
+//                content.removeChild(newDiv);
+                content.removeChild(this.parentNode.parentNode);
+            }
+
+            //双击关闭按钮类名叫做tip_h
+            var dbDiv = newDiv.getElementsByClassName("tip_h")[0];
+            dbDiv.ondblclick = function () {
+                //不能用newDiv，因为在页面加载的时候newDiv，已经变成最后一个了，当你点击的时候，用远关闭的是最后的那个div。
+//                content.removeChild(newDiv);
+                content.removeChild(this.parentNode);
+            }
+
+        }
+
+        var index = 1;
+        function fn(){
+            this.style.zIndex = index;
+            index++;
+        }
+
+    </script>
+
+
+
+</body>
+</html>
